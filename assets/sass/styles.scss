@@ -158,9 +158,8 @@ nav:hover #logo {
 #map {
   height: 400px;
   width: 100%;
-  background-image:
-    url('../img/staticmap.png'),
-    url('../img/staticmap.webp');
+  background-image: url('../img/staticmap.png');
+  background-image: url('../img/staticmap.webp');
   background-size: cover;
 }
 
