@@ -5,7 +5,16 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "browser-sync": "^2.23.6",
+    "browserify": "^16.2.0",
+    "compression": "^1.7.2",
+    "gulp-eslint": "^4.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "idb": "^2.1.1",
+    "imagemin-webp": "^4.1.0",
     "include-all": "^1.0.0",
+    "npm": "^5.8.0",
     "rc": "1.0.1",
     "sails": "^0.12.13",
     "sails-disk": "~0.10.9"
@@ -21,5 +30,18 @@
   },
   "author": "Brandy Lee Camacho",
   "linkedIn": "https://www.linkedin.com/in/brandycamacho/",
-  "email": "brandy@udacity.com"
+  "email": "brandy@udacity.com",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-gzip": "^1.4.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-jasmine-phantom": "^3.0.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0"
+  }
 }
