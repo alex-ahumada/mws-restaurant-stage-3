@@ -33,14 +33,14 @@ gulp.task('serve', ['styles'], function() {
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('styles', function() {
   return gulp.src('assets/sass/**/*.scss')
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'compressed'
     }).on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 4 versions']
     }))
-    //.pipe(sourcemaps.write())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('.tmp/public/styles'))
     .pipe(gzip())
     .pipe(gulp.dest('.tmp/public/styles'))
@@ -49,10 +49,10 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function () {
   return gulp.src('assets/js/**/*.js')
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(uglify())
-    //.pipe(sourcemaps.write())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('.tmp/public/js'))
     .pipe(gzip())
     .pipe(gulp.dest('.tmp/public/js'))
