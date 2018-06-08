@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#b12217"/>
+  <link rel="stylesheet" type="text/css" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <link media="all" type="text/css" rel="stylesheet" href="styles/styles.css">
+  <link rel="manifest" href="resources/manifest.json">
+  <title>Restaurant Reviews</title>
+</head>
+
+<body>
+<a class="hidden" href="#maincontent">Skip to main content</a>
+
+<%- body %>
+
+<!-- Download the script and execute it after lazyLoadOptions is defined -->
+<script async src="https://cdn.jsdelivr.net/npm/blazy@1.8.2/blazy.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDApAEArXoPAz6goQb-Vo5jlDUSM4sZn8&libraries=places&callback=initMap"></script>
+
+<footer id="footer" role="contentinfo">
+  Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+</footer>
+
+</body>
+
+</html>
