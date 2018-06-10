@@ -111,7 +111,6 @@ var updateRestaurants = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      //fillRestaurantsHTMLfromDB();
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }

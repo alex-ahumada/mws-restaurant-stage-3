@@ -1,5 +1,6 @@
 let restaurant;
 var map;
+let reviews;
 
 /**
  * Initialize Google map, called from HTML.
@@ -18,7 +19,11 @@ window.initMap = () => {
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
+
+
 };
+
+
 
 /**
  * Get current restaurant from page URL.
@@ -39,6 +44,7 @@ var fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
+
       fillRestaurantHTML();
       callback(null, restaurant);
     });
@@ -84,8 +90,12 @@ var fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
+
+  DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
+    self.restaurant.reviews = reviews;
+    fillReviewsHTML();
+  });
+
 };
 
 /**
@@ -115,7 +125,7 @@ var fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
-  container.appendChild(title);
+
 
   if (!reviews) {
     const noReviews = document.createElement('p');
@@ -125,9 +135,11 @@ var fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
+    console.log(review);
     ul.appendChild(createReviewHTML(review));
   });
-  container.appendChild(ul);
+  container.prepend(ul);
+  container.prepend(title);
 };
 
 /**
@@ -140,7 +152,7 @@ var createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.updatedAt).toDateString();
   li.appendChild(date);
 
   const rating = document.createElement('p');

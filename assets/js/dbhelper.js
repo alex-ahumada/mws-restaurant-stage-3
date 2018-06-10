@@ -4,13 +4,50 @@
 class DBHelper {
 
   /**
-   * Database URL.
-   * Change this to restaurants.json file location on your server.
+   * SERVER PORT NUMBER
    */
-  static get DATABASE_URL() {
-    const port = 1337;
-    return `http://localhost:${port}/restaurants`;
+  static get PORT() {
+    return 1337;
   }
+
+  /**
+   * URL for restaurants endpoint
+   */
+  static get RESTAURANTS_API() {
+    return `http://localhost:${DBHelper.PORT}/restaurants`;
+  }
+
+  /**
+   * URL for reviews endpoint
+   */
+  static get REVIEWS_API() {
+    return `http://localhost:${DBHelper.PORT}/reviews/`;
+  }
+
+  /**
+   * URL for reviews per restaurant id endpoint
+   */
+  static get RESTAURANT_REVIEWS_API() {
+    return `http://localhost:${DBHelper.PORT}/reviews/?restaurant_id=${DBHelper.getParameterByName('id')}`;
+  }
+
+  /**
+   * GET Query String From URL
+   * @param {*} name
+   * @param {*} url
+   */
+  static getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
 
   /**
    * Open database
@@ -27,7 +64,7 @@ class DBHelper {
       }
     }
 
-    return idb.open('restaurant-reviews-db', 1, function(upgradeDb) {
+    return idb.open('restaurant-reviews-db', 2, function(upgradeDb) {
       switch (upgradeDb.oldVersion) {
         case 0:
           const restaurantsStore = upgradeDb.createObjectStore('restaurants', { keyPath: 'id' });
@@ -35,6 +72,77 @@ class DBHelper {
           restaurantsStore.createIndex('by-date', 'createdAt');
           restaurantsStore.createIndex('by-cuisine', 'cuisine_type');
           restaurantsStore.createIndex('by-neighborhood', 'neighborhood');
+        case 1:
+          const reviewsStore = upgradeDb.createObjectStore('reviews', { keyPath: 'id' });
+          reviewsStore.createIndex('by-restaurant', 'restaurant_id');
+      }
+    });
+  }
+
+  /**
+   * Fetch all reviews.
+   */
+  static fetchReviews(callback) {
+
+    fetch(DBHelper.REVIEWS_API).then(reviews => {
+      return reviews.json();
+    })
+      .then(reviews => {
+        this.openRestaurantsDB().then(function (db){
+          let tx = db.transaction('reviews', 'readwrite');
+          let reviewsStore = tx.objectStore('reviews');
+          reviews.forEach(review => {
+            reviewsStore.put(review);
+          });
+
+          callback(null, reviews)
+        });
+      })
+      .catch(error => {
+        //If online request fails try to catch local idb data
+        this.openRestaurantsDB().then(function (db) {
+          let tx = db.transaction('reviews');
+          let store = tx.objectStore('reviews');
+          store.getAll().then(reviews => {
+            callback(null, reviews)
+          })
+            .catch(error => callback(error, null));
+        })
+          .catch(error => callback(error, null));
+      });
+  }
+
+  /**
+   * Fetch a review by its ID.
+   */
+  static fetchReviewById(id, callback) {
+    // fetch all reviews with proper error handling.
+    DBHelper.fetchReviews((error, reviews) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        const review = reviews.find(r => r.id == id);
+        if (review) { // Got the review
+          callback(null, review);
+        } else { // Review does not exist in the database
+          callback('Review does not exist', null);
+        }
+      }
+    });
+  }
+
+  /**
+   * Fetch reviews by restaurant id with proper error handling.
+   */
+  static fetchReviewsByRestaurantId(restaurant, callback) {
+    // Fetch all restaurants  with proper error handling
+    DBHelper.fetchReviews((error, reviews) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        // Filter restaurants to have only given cuisine type
+        const results = reviews.filter(r => r.restaurant_id == restaurant);
+        callback(null, results);
       }
     });
   }
@@ -44,13 +152,13 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
 
-    fetch(DBHelper.DATABASE_URL).then(restaurants => {
+    fetch(DBHelper.RESTAURANTS_API).then(restaurants => {
       return restaurants.json();
     })
       .then(restaurants => {
         //If online request return data fill idb
         this.openRestaurantsDB().then(function (db) {
-          var tx = db.transaction('restaurants', 'readwrite')
+          var tx = db.transaction('restaurants', 'readwrite');
           var restaurantsStore = tx.objectStore('restaurants');
           restaurants.forEach(restaurant => {
             restaurantsStore.put(restaurant);
@@ -71,10 +179,10 @@ class DBHelper {
       .catch(error => {
         //If online request fails try to catch local idb data
         this.openRestaurantsDB().then(function (db) {
-          var tx = db.transaction('restaurants')
-          var store = tx.objectStore('restaurants');
-          store.getAll().then(restaurants => {
-            callback(null, restaurants)
+          var tx = db.transaction('reviews');
+          var store = tx.objectStore('reviews');
+          store.getAll().then(reviews => {
+            callback(null, reviews)
           })
             .catch(error => callback(error, null));
         })

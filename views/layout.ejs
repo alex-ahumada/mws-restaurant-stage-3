@@ -16,6 +16,10 @@
 
 <%- body %>
 
+<aside id="connection-status">
+  <p id="connection-status-message">Currently offline, latest content may not be available and posting can be delayed until we're back online. <button>Retry</button></p>
+</aside>
+
 <!-- Download the script and execute it after lazyLoadOptions is defined -->
 <script async src="https://cdn.jsdelivr.net/npm/blazy@1.8.2/blazy.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDApAEArXoPAz6goQb-Vo5jlDUSM4sZn8&libraries=places&callback=initMap"></script>

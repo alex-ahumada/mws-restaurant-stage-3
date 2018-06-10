@@ -53,7 +53,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   var requestUrl = new URL(event.request.url);
 
-  if (requestUrl.origin === location.origin) {
+  /*if (requestUrl.origin === location.origin) {
     if (requestUrl.pathname === '/') {
       event.respondWith(caches.match('/resources/homepage.html'));
       return;
@@ -68,7 +68,7 @@ self.addEventListener('fetch', function(event) {
       event.respondWith(servePhoto(event.request));
       return;
     }
-  }
+  }*/
 
   event.respondWith(caches.match(event.request).then(function (response) {
     return response || fetch(event.request);

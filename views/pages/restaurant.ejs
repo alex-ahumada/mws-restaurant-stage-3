@@ -50,6 +50,19 @@
   <!-- Beginning reviews -->
   <section id="reviews-container">
     <ul id="reviews-list"></ul>
+
+    <form class="reviews-form" action="#">
+      <h3>Add your review!</h3>
+      <label for="review-name" class="hidden">Name</label>
+      <input id="review-name" type="text"  role="" name="Review name">
+      <label for="review-email" class="hidden">e-mail</label>
+      <input id="review-email" type="email" role="" name="Review e-mail">
+      <label for="review-rating" class="hidden">Rating</label>
+      <input id="review-rating" type="number" min="0" max="10">
+      <label for="review-message" class="hidden">e-mail:</label>
+      <textarea id="review-message" placeholder="Please, write a description for your rating."></textarea>
+      <button type="button">Submit</button>
+    </form>
   </section>
   <!-- End reviews -->
 </main>
