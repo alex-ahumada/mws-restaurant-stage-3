@@ -95,7 +95,7 @@
 }
 
 #reviews-list {
-  margin: 0;
+  margin-bottom: 4em;
   padding: 0;
 
   li {
@@ -143,6 +143,105 @@
 
     }
   }
+}
+
+.reviews-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  h3 {
+    flex: 0 1 100%;
+  }
+
+  #review-name,
+  #review-email,
+  .review-rating--wrap {
+    flex: 0 1 100%;
+    margin-bottom: 1em;
+  }
+
+  #review-name,
+  #review-email {
+    padding: 1em;
+    font-size: 1rem;
+  }
+
+  .review-rating--wrap {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    & > label {
+      flex: 0 1 20%;
+      font-weight: bold;
+    }
+  }
+
+  #review-rating {
+    border: none;
+    flex: 0 1 100%;
+
+    & > input { display: none; }
+    & > label:before {
+      margin: 5px;
+      font-size: 1.5em;
+      font-family: 'Font Awesome\ 5 Free';
+      display: inline-block;
+      content: "\f005";
+    }
+
+    & > .half:before {
+      content: "\f089";
+      position: absolute;
+    }
+
+    & > label {
+      color: #ddd;
+      float: right;
+    }
+
+    & > input:checked ~ label,
+    &:not(:checked) > label:hover,
+    &:not(:checked) > label:hover ~ label {
+      color: $color__primary;
+    }
+
+    & > input:checked + label:hover,
+    & > input:checked ~ label:hover,
+    & > label:hover ~ input:checked ~ label,
+    & > input:checked ~ label:hover ~ label {
+      color: $color__orange;
+    }
+  }
+
+  #review-message {
+    flex: 0 1 100%;
+    min-height: 10rem;
+    margin-bottom: 1em;
+    padding: 1em;
+    font-size: 1rem;
+  }
+
+  #review-submit {
+    flex: 0 1 100%;
+    background-color: $color__primary;
+    border-bottom: 3px solid #eee;
+    color: #fff;
+    display: block;
+    font-size: 1rem;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s ease-out;
+
+    &:hover,
+    &:focus {
+      background-color: $color__secondary;
+    }
+  }
+
 }
 
 #restaurant-hours {
@@ -194,6 +293,15 @@
 
     }
 
+  }
+
+  .reviews-form {
+
+    #review-name,
+    #review-email,
+    .review-rating--wrap {
+      flex: 0 1 calc(33% - 1em);
+    }
   }
 
 }

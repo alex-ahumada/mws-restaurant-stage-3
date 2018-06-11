@@ -126,7 +126,6 @@ var fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
 
-
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
@@ -135,7 +134,6 @@ var fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
-    console.log(review);
     ul.appendChild(createReviewHTML(review));
   });
   container.prepend(ul);
@@ -191,4 +189,64 @@ var getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+};
+
+/**
+ * Post review when after form validation
+ */
+var postReview = () => {
+  // Get form input value
+  const nameInput = document.getElementById('review-name');
+  const emailInput = document.getElementById('review-email');
+  const ratingInput = document.querySelector('input[name="rating"]:checked');
+  const messageInput = document.getElementById('review-message');
+
+  const name = nameInput.value;
+  const email = emailInput.value;
+  const rating = ratingInput.value;
+  const message = messageInput.value;
+
+  // Validate form input
+  let validForm = true;
+  let validEmail = validateEmail(email);
+
+  nameInput.classList.remove('not-valid');
+  emailInput.classList.remove('not-valid');
+  ratingInput.classList.remove('not-valid');
+  messageInput.classList.remove('not-valid');
+
+  if (!name) {
+    nameInput.classList.add('not-valid');
+    validForm = false;
+  }
+
+  if (!email || !validEmail) {
+    emailInput.classList.add('not-valid');
+    validForm = false;
+  }
+
+  if (!rating) {
+    ratingInput.classList.add('not-valid');
+    validForm = false;
+  }
+
+  if (!message) {
+    messageInput.classList.add('not-valid');
+    validForm = false;
+  }
+
+  if (!validForm) return;
+
+  // If valid, post review
+  console.log(name + email + rating + message);
+}
+
+/**
+ * Validate email input
+ * @param email
+ * @returns {boolean}
+ */
+var validateEmail = (email) => {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 };
