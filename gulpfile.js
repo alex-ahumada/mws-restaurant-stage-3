@@ -20,7 +20,7 @@ gulp.task('serve', ['styles'], function() {
 
   browserSync.init({
     proxy: 'localhost:1337',
-    browser: 'google chrome'
+    browser: 'google chrome canary'
   });
 
   gulp.watch('assets/sass/**/*.scss', ['styles']);

@@ -23,8 +23,6 @@ window.initMap = () => {
 
 };
 
-
-
 /**
  * Get current restaurant from page URL.
  */
@@ -57,6 +55,10 @@ var fetchRestaurantFromURL = (callback) => {
 var fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+
+  const isFavorite = document.getElementById('is-favorite-button');
+  isFavorite.innerText = restaurant.is_favorite ? "Remove from favorites" : "Add to favorites";
+  isFavorite.addEventListener("click", toggleFavorite);
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
@@ -157,9 +159,18 @@ var createReviewHTML = (review) => {
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
 
+  const deleteButton = document.createElement('button');
+  deleteButton.innerHTML = `Delete review`;
+  li.appendChild(deleteButton);
+  deleteButton.addEventListener('click', deleteReview);
+
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
+
+  let idAttribute = document.createAttribute('data-id');
+  idAttribute.value = review.id;
+  li.attributes.setNamedItem(idAttribute);
 
   return li;
 };
@@ -238,7 +249,94 @@ var postReview = () => {
   if (!validForm) return;
 
   // If valid, post review
-  console.log(name + email + rating + message);
+  //console.log('New review for restaurant with ID: ' + self.restaurant.id + '\n From: ' + name + '\n Rating: ' + rating + '\n Comments: ' +message);
+
+  fetch(DBHelper.REVIEWS_API, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "id": null,
+      "restaurant_id": restaurant.id,
+      "name": name,
+      "rating": rating,
+      "comments": message
+    })
+  })
+    .then( response => {
+      console.log('Review post success: ', response);
+
+      // Update restaurant object reviews
+      DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
+        self.restaurant.reviews = reviews;
+        // Add new review to DOM
+        const ul = document.getElementById('reviews-list');
+        while (ul.firstChild) {
+          ul.removeChild(ul.firstChild);
+        }
+        self.restaurant.reviews.forEach(review => {
+          ul.appendChild(createReviewHTML(review));
+        });
+      });
+    })
+    .catch( error => {
+      console.log('Review post failure: ', error);
+    });
+};
+
+/**
+ * Post review when after form validation
+ */
+var deleteReview = (event) => {
+  let review = event.target.parentElement;
+  let reviewId = review.getAttribute('data-id');
+
+  fetch(DBHelper.REVIEW_DELETE_API + reviewId, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then( response => {
+      console.log('Review deleted: ' + reviewId, response);
+
+      // Reload restaurant object reviews
+      DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
+        self.restaurant.reviews = reviews;
+      });
+
+      // Delete review element from DOM
+      review.parentElement.removeChild(review);
+    })
+    .catch( error => {
+      console.log('Review delete failed: ', error);
+    });
+};
+
+/**
+ * Add/remove restaurant to favorites
+ */
+var toggleFavorite = () => {
+  const isFavorite = self.restaurant.is_favorite;
+
+  fetch(DBHelper.RESTAURANT_FAVORITE_API + !isFavorite, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then( response => {
+      console.log('Favorite status updated: ', response);
+    })
+    .catch( error => {
+      console.log('Favorite status change failed: ', error);
+    });
+
+};
+
+var reloadReviews = () => {
+
 }
 
 /**

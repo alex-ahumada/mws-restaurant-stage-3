@@ -32,6 +32,27 @@ class DBHelper {
   }
 
   /**
+   * URL for reviews per restaurant id endpoint
+   */
+  static get RESTAURANT_FAVORITE_API() {
+    return `http://localhost:${DBHelper.PORT}/restaurants/${DBHelper.getParameterByName('id')}/?is_favorite=`;
+  }
+
+  /**
+   * URL for reviews per restaurant id endpoint
+   */
+  static get REVIEW_UPDATE_API() {
+    return `http://localhost:1337/reviews/`;
+  }
+
+  /**
+   * URL for reviews per restaurant id endpoint
+   */
+  static get REVIEW_DELETE_API() {
+    return `http://localhost:1337/reviews/`;
+  }
+
+  /**
    * GET Query String From URL
    * @param {*} name
    * @param {*} url
@@ -85,6 +106,8 @@ class DBHelper {
   static fetchReviews(callback) {
 
     fetch(DBHelper.REVIEWS_API).then(reviews => {
+      //let reviewsJSON = reviews.json();
+      //console.log(reviewsJSON);
       return reviews.json();
     })
       .then(reviews => {
@@ -99,7 +122,7 @@ class DBHelper {
         });
       })
       .catch(error => {
-        //If online request fails try to catch local idb data
+        //If online request fails try to catch local data
         this.openRestaurantsDB().then(function (db) {
           let tx = db.transaction('reviews');
           let store = tx.objectStore('reviews');
@@ -140,7 +163,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        // Filter restaurants to have only given cuisine type
+        // Filter reviews from certain restaurant
         const results = reviews.filter(r => r.restaurant_id == restaurant);
         callback(null, results);
       }

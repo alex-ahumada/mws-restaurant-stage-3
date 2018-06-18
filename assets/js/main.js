@@ -154,6 +154,13 @@ var createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
   li.className = 'restaurant';
 
+  if (restaurant.is_favorite) {
+    const favorite = document.createElement('span');
+    favorite.classList.add('is-favorite');
+    favorite.innerText = 'Is favorite';
+    li.append(favorite);
+  }
+
   const picture = document.createElement('picture');
   li.append(picture);
 
