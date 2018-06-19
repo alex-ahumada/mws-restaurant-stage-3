@@ -45,7 +45,7 @@
           "Sunday": "12:00 pm - 3:00 pm, 5:00 pm - 11:00 pm"
         },
         "createdAt": 1504095568414,
-        "updatedAt": "2018-06-18T18:22:49.097Z",
+        "updatedAt": "2018-06-19T19:14:32.616Z",
         "is_favorite": "false",
         "id": 2
       },
@@ -69,8 +69,9 @@
           "Sunday": "11:30 am - 2:00 am"
         },
         "createdAt": 1504095571434,
-        "updatedAt": 1504095571434,
-        "id": 3
+        "updatedAt": "2018-06-19T19:16:26.410Z",
+        "id": 3,
+        "is_favorite": "false"
       },
       {
         "name": "Katz's Delicatessen",
@@ -140,8 +141,8 @@
           "Sunday": "12:00 pm - 9:00 pm"
         },
         "createdAt": 1504095567071,
-        "updatedAt": 1504095567071,
-        "is_favorite": false,
+        "updatedAt": "2018-06-19T19:17:43.475Z",
+        "is_favorite": "false",
         "id": 6
       },
       {
@@ -188,8 +189,8 @@
           "Sunday": "10:00 am - 3:00 pm, 5:30 pm - 11:00 pm"
         },
         "createdAt": 1504095567091,
-        "updatedAt": 1504095567091,
-        "is_favorite": false,
+        "updatedAt": "2018-06-19T19:23:06.397Z",
+        "is_favorite": "false",
         "id": 8
       },
       {
@@ -267,15 +268,6 @@
         "updatedAt": 1504095567183,
         "rating": "3",
         "comments": "I was VERY excited to come here after seeing and hearing so many good things about this place. Having read much, I knew going into it that it was not going to be authentic Chinese. The place was edgy, had a punk rock throwback attitude, and generally delivered the desired atmosphere. Things went downhill from there though. The food was okay at best and the best qualities were easily overshadowed by what I believe to be poor decisions by the kitchen staff."
-      },
-      {
-        "id": 5,
-        "restaurant_id": 2,
-        "name": "Steve",
-        "createdAt": 1504095567183,
-        "updatedAt": 1504095567183,
-        "rating": 4,
-        "comments": "This cozy Clinton Hill restaurant excels at both straightforward and unusual wood-fired pizzas. If you want a taste of the latter, consider ordering the Emily, which is topped with mozzarella, pistachios, truffled sottocenere cheese, and honey. The menu includes salads and a handful of starters, as well as a burger that some meat connoisseurs consider to be among the best in the city."
       },
       {
         "id": 7,
@@ -485,22 +477,31 @@
         "comments": "The hype was real. Please go. Get the ceviche. And the tres leches. You're welcome"
       },
       {
-        "id": 49,
+        "id": 51,
         "restaurant_id": 2,
-        "name": "Ellie",
-        "rating": "3.5",
-        "comments": "dasgdfhgfg",
-        "createdAt": "2018-06-18T19:43:31.777Z",
-        "updatedAt": "2018-06-18T19:43:31.777Z"
+        "name": "Alex",
+        "rating": "5",
+        "comments": "Awesome burgers! Nearly as awesome as fetch finally working :D",
+        "createdAt": "2018-06-19T17:00:13.208Z",
+        "updatedAt": "2018-06-19T17:00:13.208Z"
       },
       {
-        "id": 50,
-        "restaurant_id": 1,
-        "name": "Ellie",
-        "rating": "3.5",
-        "comments": "Whoof, whoof!",
-        "createdAt": "2018-06-18T19:45:38.015Z",
-        "updatedAt": "2018-06-18T19:45:38.015Z"
+        "id": 52,
+        "restaurant_id": 2,
+        "name": "Rocío",
+        "rating": "1",
+        "comments": "Caca de la vaca, el queso estaba por debajo de la masa.",
+        "createdAt": "2018-06-19T18:38:48.735Z",
+        "updatedAt": "2018-06-19T18:38:48.735Z"
+      },
+      {
+        "id": 53,
+        "restaurant_id": 8,
+        "name": "Alex",
+        "rating": "4.5",
+        "comments": "Everything working great!",
+        "createdAt": "2018-06-19T19:28:21.870Z",
+        "updatedAt": "2018-06-19T19:28:21.870Z"
       }
     ]
   },
@@ -556,7 +557,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 50
+      "id": 53
     }
   }
 }

@@ -57,8 +57,12 @@ var fillRestaurantHTML = (restaurant = self.restaurant) => {
   name.innerHTML = restaurant.name;
 
   const isFavorite = document.getElementById('is-favorite-button');
-  isFavorite.innerText = restaurant.is_favorite ? "Remove from favorites" : "Add to favorites";
+  const favoriteClass = restaurant.is_favorite ? "favorite" : "not-favorite";
+  isFavorite.classList.add(favoriteClass);
   isFavorite.addEventListener("click", toggleFavorite);
+
+  const isFavoriteText = document.getElementById('is-favorite-text');
+  isFavoriteText.innerText = restaurant.is_favorite ? "Remove from favorites" : "Add to favorites";
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
@@ -159,8 +163,10 @@ var createReviewHTML = (review) => {
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
 
-  const deleteButton = document.createElement('button');
-  deleteButton.innerHTML = `Delete review`;
+  const deleteButton = document.createElement('a');
+  deleteButton.classList.add('delete-review-button');
+  deleteButton.classList.add('tooltip');
+  deleteButton.innerHTML = '<span class="tooltip-text">Delete review</span>';
   li.appendChild(deleteButton);
   deleteButton.addEventListener('click', deleteReview);
 
@@ -324,10 +330,27 @@ var toggleFavorite = () => {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json"
-    }
+    },
+    body: JSON.stringify({
+      "is_favorite": !isFavorite
+    })
   })
     .then( response => {
       console.log('Favorite status updated: ', response);
+      const isFavorite = document.getElementById('is-favorite-button');
+      const isFavoriteText = document.getElementById('is-favorite-text');
+
+      if (isFavorite.classList.contains('favorite')) {
+        isFavorite.classList.remove('favorite');
+        isFavorite.classList.add('not-favorite');
+        isFavoriteText.innerText = 'Add to favorites';
+      } else {
+        isFavorite.classList.add('favorite');
+        isFavorite.classList.remove('not-favorite');
+        isFavoriteText.innerText = 'Remove from favorites';
+      }
+
+      self.restaurant.is_favorite = !self.restaurant.is_favorite;
     })
     .catch( error => {
       console.log('Favorite status change failed: ', error);

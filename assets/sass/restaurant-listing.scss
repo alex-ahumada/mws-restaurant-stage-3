@@ -30,6 +30,22 @@
       transform: scale(1.05);
     }
 
+    .is-favorite {
+      display: block;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+
+      &:after {
+        content: "\f02e";
+        color: #b12217;
+        font-family: "Font Awesome 5 Free";
+        font-size: 3em;
+        font-weight: 100;
+        text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+      }
+    }
+
     h3 {
       padding: 0 30px;
       color: $color__primary;

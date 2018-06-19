@@ -40,7 +40,7 @@
     </picture>
     <div class="restaurant-info">
       <h2 id="restaurant-name"></h2>
-      <button id="is-favorite-button"></button>
+      <a id="is-favorite-button"><span id="is-favorite-text" class="hidden"></span></a>
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address" tabindex="0"></p>
       <table id="restaurant-hours" tabindex="0"></table>
@@ -60,7 +60,7 @@
       <input id="review-email" type="email" name="Your e-mail" placeholder="e-mail">
       <div class="review-rating--wrap">
         <label for="review-rating">Rating: </label>
-        <fieldset id="review-rating">
+        <fieldset id="review-rating" aria-roledescription="">
           <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
           <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Fantastic - 4.5 stars"></label>
           <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Very good - 4 stars"></label>

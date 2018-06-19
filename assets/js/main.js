@@ -157,7 +157,6 @@ var createRestaurantHTML = (restaurant) => {
   if (restaurant.is_favorite) {
     const favorite = document.createElement('span');
     favorite.classList.add('is-favorite');
-    favorite.innerText = 'Is favorite';
     li.append(favorite);
   }
 
