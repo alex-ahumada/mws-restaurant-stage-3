@@ -85,7 +85,7 @@ class DBHelper {
       }
     }
 
-    return idb.open('restaurant-reviews-db', 2, function(upgradeDb) {
+    return idb.open('restaurant-reviews-db', 3, function(upgradeDb) {
       switch (upgradeDb.oldVersion) {
         case 0:
           const restaurantsStore = upgradeDb.createObjectStore('restaurants', { keyPath: 'id' });
@@ -96,6 +96,8 @@ class DBHelper {
         case 1:
           const reviewsStore = upgradeDb.createObjectStore('reviews', { keyPath: 'id' });
           reviewsStore.createIndex('by-restaurant', 'restaurant_id');
+        case 2:
+          const offlineReviewsStore = upgradeDb.createObjectStore('offline-reviews', { keyPath: 'id' });
       }
     });
   }
@@ -202,8 +204,8 @@ class DBHelper {
       .catch(error => {
         //If online request fails try to catch local idb data
         this.openRestaurantsDB().then(function (db) {
-          var tx = db.transaction('reviews');
-          var store = tx.objectStore('reviews');
+          var tx = db.transaction('restaurants');
+          var store = tx.objectStore('restaurants');
           store.getAll().then(reviews => {
             callback(null, reviews)
           })

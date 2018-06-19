@@ -34,7 +34,7 @@ gulp.task('serve', ['styles'], function() {
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('styles', function() {
   return gulp.src('assets/sass/**/*.scss')
-    //pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'compressed'
     }).on('error', sass.logError))

@@ -56,6 +56,7 @@
     </picture>
     <div class="restaurant-info">
       <h2 id="restaurant-name"></h2>
+      <a id="is-favorite-button"><span id="is-favorite-text" class="hidden"></span></a>
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address" tabindex="0"></p>
       <table id="restaurant-hours" tabindex="0"></table>
@@ -66,6 +67,32 @@
   <!-- Beginning reviews -->
   <section id="reviews-container">
     <ul id="reviews-list"></ul>
+
+    <form class="reviews-form" action="#">
+      <h3>Add your review!</h3>
+      <label for="review-name" class="hidden">Name</label>
+      <input id="review-name" type="text" name="Your name" placeholder="Name">
+      <label for="review-email" class="hidden">e-mail</label>
+      <input id="review-email" type="email" name="Your e-mail" placeholder="e-mail">
+      <div class="review-rating--wrap">
+        <label for="review-rating">Rating: </label>
+        <fieldset id="review-rating" aria-roledescription="">
+          <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+          <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Fantastic - 4.5 stars"></label>
+          <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Very good - 4 stars"></label>
+          <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Good - 3.5 stars"></label>
+          <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Average - 3 stars"></label>
+          <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Not bad - 2.5 stars"></label>
+          <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Bad - 2 stars"></label>
+          <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Very bad - 1.5 stars"></label>
+          <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Really bad - 1 star"></label>
+          <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Horrible - 0.5 stars"></label>
+        </fieldset>
+      </div>
+      <label for="review-message" class="hidden">e-mail:</label>
+      <textarea id="review-message" placeholder="Please, write a description for your review."></textarea>
+      <button id="review-submit" type="button" onclick="postReview()">Submit</button>
+    </form>
   </section>
   <!-- End reviews -->
 </main>
@@ -89,6 +116,7 @@
 <script type="application/javascript" charset="utf-8" src="js/idb/lib/idb.js"></script>
 <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
 <script type="application/javascript" charset="utf-8" src="js/restaurant_info.js"></script>
+
 
 <!-- Download the script and execute it after lazyLoadOptions is defined -->
 <script async src="https://cdn.jsdelivr.net/npm/blazy@1.8.2/blazy.min.js"></script>
