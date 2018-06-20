@@ -108,8 +108,6 @@ class DBHelper {
   static fetchReviews(callback) {
 
     fetch(DBHelper.REVIEWS_API).then(reviews => {
-      //let reviewsJSON = reviews.json();
-      //console.log(reviewsJSON);
       return reviews.json();
     })
       .then(reviews => {
@@ -170,6 +168,52 @@ class DBHelper {
         callback(null, results);
       }
     });
+  }
+
+  /**
+   * Save offline review to IndexedDB
+   */
+  static saveOfflineReview(review) {
+    this.openRestaurantsDB().then(function (db) {
+      let tx = db.transaction('offline-reviews', 'readwrite');
+      let offlineReviewsStore = tx.objectStore('offline-reviews');
+
+      offlineReviewsStore.put(review).then( review => {
+        console.log("Saved offline review: " + review);
+      });
+    });
+  };
+
+  /**
+   * Send cached reviews and clear IndexedDB offline reviews data
+   */
+  static sendCachedReviews() {
+    let cachedReview;
+
+    cachedReview = this.openRestaurantsDB().then(function (db) {
+      let tx = db.transaction('offline-reviews', 'readwrite');
+      let offlineReviewsStore = tx.objectStore('offline-reviews');
+
+      return offlineReviewsStore.get(1);
+    });
+
+    return cachedReview;
+  }
+
+
+  /**
+   * Send cached reviews and clear IndexedDB offline reviews data
+   */
+  static clearCachedReviews() {
+    this.openRestaurantsDB().then(function (db) {
+      let tx = db.transaction('offline-reviews', 'readwrite');
+      let offlineReviewsStore = tx.objectStore('offline-reviews');
+
+      return offlineReviewsStore.clear();
+    });
+
+    console.log("Cleared caches reviews.");
+
   }
 
   /**

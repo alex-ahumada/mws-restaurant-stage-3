@@ -336,6 +336,16 @@
 
 }
 
+#connection-status {
+  text-align: center;
+
+  #reload-button {
+    padding: 0.5em 1em;
+    color: white;
+    background: $color__primary;
+  }
+}
+
 #restaurant-hours {
 
   tr {

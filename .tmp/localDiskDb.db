@@ -288,15 +288,6 @@
         "comments": "I've been to Korea before and many other Korean BBQ places. We had the regular pork belly and a beef (forgot which cut) and a seafood tofu soup. Two meat and a soup was just prefect for the two of us. We could have done one meat and one soup. The portions of the meat are great! The beef was juicy, tender and so good. The sides were excellent. "
       },
       {
-        "id": 9,
-        "restaurant_id": 3,
-        "name": "Emily",
-        "createdAt": 1504095567183,
-        "updatedAt": 1504095567183,
-        "rating": 2,
-        "comments": "MEH. I've tried their Jersey location as well but Kang Ho Dong meat quality is severely decreasing. A Korean bbq place with whatever meat? I think NOT!"
-      },
-      {
         "id": 10,
         "restaurant_id": 4,
         "name": "Steve",
@@ -477,24 +468,6 @@
         "comments": "The hype was real. Please go. Get the ceviche. And the tres leches. You're welcome"
       },
       {
-        "id": 51,
-        "restaurant_id": 2,
-        "name": "Alex",
-        "rating": "5",
-        "comments": "Awesome burgers! Nearly as awesome as fetch finally working :D",
-        "createdAt": "2018-06-19T17:00:13.208Z",
-        "updatedAt": "2018-06-19T17:00:13.208Z"
-      },
-      {
-        "id": 52,
-        "restaurant_id": 2,
-        "name": "Rocío",
-        "rating": "1",
-        "comments": "Caca de la vaca, el queso estaba por debajo de la masa.",
-        "createdAt": "2018-06-19T18:38:48.735Z",
-        "updatedAt": "2018-06-19T18:38:48.735Z"
-      },
-      {
         "id": 53,
         "restaurant_id": 8,
         "name": "Alex",
@@ -504,13 +477,31 @@
         "updatedAt": "2018-06-19T19:28:21.870Z"
       },
       {
-        "id": 54,
+        "id": 63,
+        "restaurant_id": 1,
+        "name": "Alex",
+        "rating": "4",
+        "comments": "One of the best!",
+        "createdAt": "2018-06-20T16:57:15.247Z",
+        "updatedAt": "2018-06-20T16:57:15.247Z"
+      },
+      {
+        "id": 80,
         "restaurant_id": 2,
-        "name": "Ellie",
-        "rating": "4.5",
-        "comments": "I really like this place!",
-        "createdAt": "2018-06-20T15:55:28.619Z",
-        "updatedAt": "2018-06-20T15:55:28.619Z"
+        "name": "Paco",
+        "rating": "1",
+        "comments": "Fetch only gets 30 reviews…",
+        "createdAt": "2018-06-20T17:38:47.453Z",
+        "updatedAt": "2018-06-20T17:38:47.453Z"
+      },
+      {
+        "id": 100,
+        "restaurant_id": 2,
+        "name": "Alex",
+        "rating": "3.5",
+        "comments": "fahGDLKJabsdkjhgaODSYGALKJDHS offline",
+        "createdAt": "2018-06-20T21:24:24.863Z",
+        "updatedAt": "2018-06-20T21:24:24.863Z"
       }
     ]
   },
@@ -566,7 +557,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 54
+      "id": 100
     }
   }
 }

@@ -24,8 +24,25 @@ window.initMap = () => {
         DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
       });
       fillBreadcrumb();
+
+      if (navigator.onLine) {
+        const connectionStatus = document.getElementById('connection-status');
+        connectionStatus.classList.add('hidden');
+        sendCachedReviews();
+      }
+      else {
+        const connectionStatus = document.getElementById('connection-status');
+        connectionStatus.classList.remove('hidden');
+
+        const reloadButton = document.getElementById('reload-button');
+        reloadButton.addEventListener('click', reloadPage);
+      }
     }
   });
+};
+
+var reloadPage = () => {
+  location.reload();
 };
 
 /**
@@ -221,12 +238,12 @@ var postReview = () => {
   const nameInput = document.getElementById('review-name');
   const emailInput = document.getElementById('review-email');
   const ratingInput = document.querySelector('input[name="rating"]:checked');
-  const messageInput = document.getElementById('review-message');
+  const commentsInput = document.getElementById('review-message');
 
   const name = nameInput.value;
   const email = emailInput.value;
   const rating = ratingInput.value;
-  const message = messageInput.value;
+  const comments = commentsInput.value;
 
   // Validate form input
   let validForm = true;
@@ -235,7 +252,7 @@ var postReview = () => {
   nameInput.classList.remove('not-valid');
   emailInput.classList.remove('not-valid');
   ratingInput.classList.remove('not-valid');
-  messageInput.classList.remove('not-valid');
+  commentsInput.classList.remove('not-valid');
 
   if (!name) {
     nameInput.classList.add('not-valid');
@@ -252,8 +269,8 @@ var postReview = () => {
     validForm = false;
   }
 
-  if (!message) {
-    messageInput.classList.add('not-valid');
+  if (!comments) {
+    commentsInput.classList.add('not-valid');
     validForm = false;
   }
 
@@ -262,38 +279,98 @@ var postReview = () => {
   // If valid, post review
   //console.log('New review for restaurant with ID: ' + self.restaurant.id + '\n From: ' + name + '\n Rating: ' + rating + '\n Comments: ' +message);
 
-  fetch(DBHelper.REVIEWS_API, {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      "id": null,
-      "restaurant_id": restaurant.id,
-      "name": name,
-      "rating": rating,
-      "comments": message
-    })
-  })
-    .then( response => {
-      console.log('Review post success: ', response);
 
-      // Update restaurant object reviews
-      DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
-        self.restaurant.reviews = reviews;
-        // Add new review to DOM
-        const ul = document.getElementById('reviews-list');
-        while (ul.firstChild) {
-          ul.removeChild(ul.firstChild);
-        }
-        self.restaurant.reviews.forEach(review => {
-          ul.appendChild(createReviewHTML(review));
-        });
-      });
+    fetch(DBHelper.REVIEWS_API, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "id": null,
+        "restaurant_id": restaurant.id,
+        "name": name,
+        "rating": rating,
+        "comments": comments,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+      })
     })
-    .catch( error => {
-      console.log('Review post failure: ', error);
-    });
+      .then( response => {
+        console.log('Review post success: ', response);
+
+        // Update restaurant object reviews
+        DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
+          self.restaurant.reviews = reviews;
+          // Add new review to DOM
+          const ul = document.getElementById('reviews-list');
+          while (ul.firstChild) {
+            ul.removeChild(ul.firstChild);
+          }
+          self.restaurant.reviews.forEach(review => {
+            ul.appendChild(createReviewHTML(review));
+          });
+        });
+      })
+      .catch( error => {
+        console.log('Review post failure: ', error);
+        const review = {
+          id: 1,
+          restaurant_id: restaurant.id,
+          name: name,
+          rating: rating,
+          comments: comments,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+        DBHelper.saveOfflineReview(review);
+      });
+};
+
+/**
+ *
+ */
+var sendCachedReviews = () => {
+  DBHelper.sendCachedReviews().then( cachedReview => {
+
+    if (cachedReview != null) {
+      fetch(DBHelper.REVIEWS_API, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "id": null,
+          "restaurant_id": cachedReview.restaurant_id,
+          "name": cachedReview.name,
+          "rating": cachedReview.rating,
+          "comments": cachedReview.comments,
+          "createdAt": cachedReview.createdAt,
+          "updatedAt": cachedReview.updatedAt
+        })
+      })
+        .then( response => {
+          console.log('Offline review post success: ', response);
+          DBHelper.clearCachedReviews();
+
+          // Update restaurant object reviews
+          DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (error, reviews) => {
+            self.restaurant.reviews = reviews;
+            // Add new review to DOM
+            const ul = document.getElementById('reviews-list');
+            while (ul.firstChild) {
+              ul.removeChild(ul.firstChild);
+            }
+            self.restaurant.reviews.forEach(review => {
+              ul.appendChild(createReviewHTML(review));
+            });
+          });
+        })
+        .catch( error => {
+          console.log('Review post failure: ', error);
+        });
+    }
+
+  });
 };
 
 /**
