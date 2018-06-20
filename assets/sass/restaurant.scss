@@ -68,7 +68,6 @@
 }
 
 #restaurant-container {
-  position: relative;
   flex: 1 0 100%;
   display: flex;
   flex-flow: column wrap;
@@ -78,11 +77,12 @@
 
 .restaurant-info {
   flex: 1 0 100%;
+  position: relative;
   padding: 1em 2em;
 }
 
 #restaurant-name {
-  color: #f18200;
+  color: $color__primary;
   font-family: Arial,sans-serif;
   font-size: 2rem;
   font-weight: 200;
@@ -158,7 +158,7 @@
   padding: 2em 2em;
 
   h3 {
-    color: #f58500;
+    color: $color__primary;
     font-size: 2rem;
     font-weight: 300;
     letter-spacing: -1px;

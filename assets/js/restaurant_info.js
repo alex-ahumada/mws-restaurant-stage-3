@@ -10,17 +10,22 @@ window.initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
+      var mapContainer = document.getElementById('map');
+      var mapClicked = false;
+      mapContainer.addEventListener("click", () => {
+        if (!mapClicked) {
+          self.map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: restaurant.latlng,
+            scrollwheel: false
+          });
+          mapClicked = true;
+        }
+        DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
       });
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
-
-
 };
 
 /**

@@ -502,6 +502,15 @@
         "comments": "Everything working great!",
         "createdAt": "2018-06-19T19:28:21.870Z",
         "updatedAt": "2018-06-19T19:28:21.870Z"
+      },
+      {
+        "id": 54,
+        "restaurant_id": 2,
+        "name": "Ellie",
+        "rating": "4.5",
+        "comments": "I really like this place!",
+        "createdAt": "2018-06-20T15:55:28.619Z",
+        "updatedAt": "2018-06-20T15:55:28.619Z"
       }
     ]
   },
@@ -557,7 +566,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 53
+      "id": 54
     }
   }
 }
