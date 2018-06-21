@@ -234,52 +234,49 @@ var getParameterByName = (name, url) => {
  * Post review when after form validation
  */
 var postReview = () => {
+  const reviewsForm = document.getElementById('reviews-form');
+  const formNotValidMessage = document.createElement('span');
   // Get form input value
+  const reviewsFormTitle = document.getElementById('reviews-form-title');
   const nameInput = document.getElementById('review-name');
   const emailInput = document.getElementById('review-email');
   const ratingInput = document.querySelector('input[name="rating"]:checked');
   const commentsInput = document.getElementById('review-message');
 
   const name = nameInput.value;
+  console.log('name: ' + name);
   const email = emailInput.value;
-  const rating = ratingInput.value;
+  console.log('email: ' + email);
+  let rating;
+  if(ratingInput != null) {
+    rating = ratingInput.value;
+  }
+  console.log('rating: ' + rating);
   const comments = commentsInput.value;
+  console.log('comments: ' + comments);
 
   // Validate form input
   let validForm = true;
   let validEmail = validateEmail(email);
 
-  nameInput.classList.remove('not-valid');
-  emailInput.classList.remove('not-valid');
-  ratingInput.classList.remove('not-valid');
-  commentsInput.classList.remove('not-valid');
+  reviewsForm.classList.remove('not-valid');
 
-  if (!name) {
-    nameInput.classList.add('not-valid');
+  if (name == null || email == null || !validEmail || rating == null || comments == null || comments.trim() == "") {
     validForm = false;
   }
 
-  if (!email || !validEmail) {
-    emailInput.classList.add('not-valid');
-    validForm = false;
-  }
+  if (validForm) {
 
-  if (!rating) {
-    ratingInput.classList.add('not-valid');
-    validForm = false;
-  }
+    const messageToRemove = document.getElementById('form-not-valid-message');
+    // Remove not valid message if present
+    if (messageToRemove) {
+      reviewsForm.classList.remove('not-valid');
+      messageToRemove.parentNode.removeChild(messageToRemove);
+      console.log('Removing not valid message');
+    }
 
-  if (!comments) {
-    commentsInput.classList.add('not-valid');
-    validForm = false;
-  }
-
-  if (!validForm) return;
-
-  // If valid, post review
-  //console.log('New review for restaurant with ID: ' + self.restaurant.id + '\n From: ' + name + '\n Rating: ' + rating + '\n Comments: ' +message);
-
-
+    // If valid, post review
+    //console.log('New review for restaurant with ID: ' + self.restaurant.id + '\n From: ' + name + '\n Rating: ' + rating + '\n Comments: ' +message);
     fetch(DBHelper.REVIEWS_API, {
       method: 'POST',
       headers: {
@@ -324,6 +321,16 @@ var postReview = () => {
         };
         DBHelper.saveOfflineReview(review);
       });
+
+  } else {
+    console.log('From not valid!');
+
+    reviewsForm.classList.add('not-valid');
+
+    formNotValidMessage.innerText = 'Please fill all fields and select a rating score!';
+    reviewsFormTitle.appendChild(formNotValidMessage);
+    formNotValidMessage.setAttribute('id', 'form-not-valid-message');
+  }
 };
 
 /**
