@@ -105,6 +105,41 @@
     font-size: 2em;
   }
 
+  #is-favorite-text {
+    visibility: hidden;
+    position: absolute;
+    display: inline-block;
+    width: 10em;
+    top: 0;
+    right: 120%;
+    padding: 0.5em;
+    opacity: 0;
+    background-color: $color__dark_grey;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.8em;
+    text-align: center;
+    transition: opacity 0.2s ease-out;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 5px);
+      right: -10px;
+      margin-left: -15px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent #555;
+    }
+  }
+
+  &:hover {
+    #is-favorite-text{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
   &.favorite {
     font-weight: 100;
 
