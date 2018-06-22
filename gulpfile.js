@@ -20,7 +20,8 @@ gulp.task('serve', ['styles'], function() {
 
   browserSync.init({
     proxy: 'localhost:1337',
-    browser: 'google chrome canary'
+    browser: 'google chrome canary',
+    https: false //{ key: "config/ssl/server.key", cert: "config/ssl/server.crt" }
   });
 
   gulp.watch('assets/sass/**/*.scss', ['styles']);
@@ -35,6 +36,10 @@ gulp.task('serve', ['styles'], function() {
 gulp.task('styles', function() {
   return gulp.src('assets/sass/**/*.scss')
     //.pipe(sourcemaps.init())
+    .pipe(sass({
+      outputStyle: 'nested'
+    }).on('error', sass.logError))
+    .pipe(gulp.dest('assets/css'))
     .pipe(sass({
       outputStyle: 'compressed'
     }).on('error', sass.logError))
