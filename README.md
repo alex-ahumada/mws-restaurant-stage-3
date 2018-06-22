@@ -1,4 +1,7 @@
 # Local Development API Server
+## Lighthouse reports
+Local Lighthouse reports and screen captures are located in /lighthouse_reports.
+This has been included as a reviewer request, he/she was getting different scores.
 ## Usage
 #### Get Restaurants
 ```
@@ -42,6 +45,16 @@ Let's start with running commands in your terminal, known as command line interf
 ###### Start the server
 ```Start server
 # node server
+```
+####Run Gulp tasks
+Default task to launch BrowserSync and watch SCSS, JS, and template changes.
+Saves minified and GZipped copies.
+```Run gulp default
+# gulp default
+```
+Task to process images
+```Run gulp images
+# gulp images
 ```
 ### You should now have access to your API server environment
 debug: Environment : development
