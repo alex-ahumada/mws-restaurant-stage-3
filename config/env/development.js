@@ -21,4 +21,9 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
 
+  //ssl: {
+  //  key: require('fs').readFileSync(require('path').resolve(__dirname,'../ssl/server.key')),
+  //  cert: require('fs').readFileSync(require('path').resolve(__dirname,'../ssl/server.crt'))
+  //}
+
 };

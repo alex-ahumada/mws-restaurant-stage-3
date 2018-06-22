@@ -10,46 +10,50 @@ class DBHelper {
     return 1337;
   }
 
+  static get PROTOCOL() {
+    return 'http://';
+  }
+
   /**
    * URL for restaurants endpoint
    */
   static get RESTAURANTS_API() {
-    return `http://localhost:${DBHelper.PORT}/restaurants`;
+    return `${DBHelper.PROTOCOL}localhost:${DBHelper.PORT}/restaurants`;
   }
 
   /**
    * URL for reviews endpoint
    */
   static get REVIEWS_API() {
-    return `http://localhost:${DBHelper.PORT}/reviews/`;
+    return `${DBHelper.PROTOCOL}localhost:${DBHelper.PORT}/reviews/`;
   }
 
   /**
    * URL for reviews per restaurant id endpoint
    */
   static get RESTAURANT_REVIEWS_API() {
-    return `http://localhost:${DBHelper.PORT}/reviews/?restaurant_id=${DBHelper.getParameterByName('id')}`;
+    return `${DBHelper.PROTOCOL}localhost:${DBHelper.PORT}/reviews/?restaurant_id=${DBHelper.getParameterByName('id')}`;
   }
 
   /**
    * URL for reviews per restaurant id endpoint
    */
   static get RESTAURANT_FAVORITE_API() {
-    return `http://localhost:${DBHelper.PORT}/restaurants/${DBHelper.getParameterByName('id')}/?is_favorite=`;
+    return `${DBHelper.PROTOCOL}localhost:${DBHelper.PORT}/restaurants/${DBHelper.getParameterByName('id')}/?is_favorite=`;
   }
 
   /**
    * URL for reviews per restaurant id endpoint
    */
   static get REVIEW_UPDATE_API() {
-    return `http://localhost:1337/reviews/`;
+    return `${DBHelper.PROTOCOL}localhost:1337/reviews/`;
   }
 
   /**
    * URL for reviews per restaurant id endpoint
    */
   static get REVIEW_DELETE_API() {
-    return `http://localhost:1337/reviews/`;
+    return `${DBHelper.PROTOCOL}localhost:1337/reviews/`;
   }
 
   /**

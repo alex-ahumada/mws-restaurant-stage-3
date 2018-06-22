@@ -495,13 +495,13 @@
         "updatedAt": "2018-06-20T17:38:47.453Z"
       },
       {
-        "id": 114,
+        "id": 115,
         "restaurant_id": 2,
         "name": "Alex",
-        "rating": "3.5",
+        "rating": "5",
         "comments": "One last test!",
-        "createdAt": "2018-06-21T16:44:25.981Z",
-        "updatedAt": "2018-06-21T16:44:25.981Z"
+        "createdAt": "2018-06-22T14:53:45.066Z",
+        "updatedAt": "2018-06-22T14:53:45.066Z"
       }
     ]
   },
@@ -557,7 +557,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 114
+      "id": 115
     }
   }
 }
